@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ProEquipos.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ProEquiposContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProEquiposContext") ?? throw new InvalidOperationException("Connection string 'ProEquiposContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
