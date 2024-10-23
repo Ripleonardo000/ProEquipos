@@ -48,7 +48,7 @@ namespace ProEquipos.Controllers
         // GET: Jugadors/Create
         public IActionResult Create()
         {
-            ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "Id", "Id");
+            ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "Id", "Nombre");
             return View();
         }
 

@@ -46,6 +46,7 @@ namespace ProEquipos.Controllers
         // GET: Equipoes/Create
         public IActionResult Create()
         {
+
             return View();
         }
 
