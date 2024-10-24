@@ -9,45 +9,55 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<!-- Formulario de búsqueda -->
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <input type="text" name="searchString" placeholder="Buscar por equipo" class="form-control" />
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                @Html.DisplayNameFor(model => model.First().Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Posicion)
+                @Html.DisplayNameFor(model => model.First().Posicion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Edad)
+                @Html.DisplayNameFor(model => model.First().Edad)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Equipo)
+                @Html.DisplayNameFor(model => model.First().Equipo.Nombre)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Posicion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Edad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Equipo.Nombre)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Posicion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Edad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipo.Nombre)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

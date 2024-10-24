@@ -31,6 +31,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Equipoes" asp-action="Index">Equipo</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Estadios" asp-action="Index">Estadios</a>
+                        </li>
                         
                     </ul>
                 </div>
@@ -39,6 +42,10 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            
+                
+            <img src="~/images/imagenn.png" style="width: 200px; height: auto;" alt="Descripción de la imagen pequeña">
+
             @RenderBody()
         </main>
     </div>
@@ -52,5 +59,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

@@ -10,31 +10,22 @@ using ProEquipos.Models;
 
 namespace ProEquipos.Controllers
 {
-    public class JugadorsController : Controller
+    public class Estadios1Controller : Controller
     {
         private readonly ProEquiposContext _context;
 
-        public JugadorsController(ProEquiposContext context)
+        public Estadios1Controller(ProEquiposContext context)
         {
             _context = context;
         }
 
-        // GET: Jugadors
-        // GET: Jugadors
-        public async Task<IActionResult> Index(string searchString)
+        // GET: Estadios1
+        public async Task<IActionResult> Index()
         {
-            var jugadores = _context.Jugador.Include(j => j.Equipo).AsQueryable();
-
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                jugadores = jugadores.Where(j => j.Equipo.Nombre.Contains(searchString));
-            }
-
-            return View(await jugadores.ToListAsync());
+            return View(await _context.Estadio.ToListAsync());
         }
 
-
-        // GET: Jugadors/Details/5
+        // GET: Estadios1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,42 +33,39 @@ namespace ProEquipos.Controllers
                 return NotFound();
             }
 
-            var jugador = await _context.Jugador
-                .Include(j => j.Equipo)
+            var estadio = await _context.Estadio
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (jugador == null)
+            if (estadio == null)
             {
                 return NotFound();
             }
 
-            return View(jugador);
+            return View(estadio);
         }
 
-        // GET: Jugadors/Create
+        // GET: Estadios1/Create
         public IActionResult Create()
         {
-            ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "Id", "Nombre");
             return View();
         }
 
-        // POST: Jugadors/Create
+        // POST: Estadios1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Posicion,Edad,IdEquipo")] Jugador jugador)
+        public async Task<IActionResult> Create([Bind("Id,Direccion,Ciudad,Capacidad")] Estadio estadio)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(jugador);
+                _context.Add(estadio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "Id", "Id", jugador.IdEquipo);
-            return View(jugador);
+            return View(estadio);
         }
 
-        // GET: Jugadors/Edit/5
+        // GET: Estadios1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,23 +73,22 @@ namespace ProEquipos.Controllers
                 return NotFound();
             }
 
-            var jugador = await _context.Jugador.FindAsync(id);
-            if (jugador == null)
+            var estadio = await _context.Estadio.FindAsync(id);
+            if (estadio == null)
             {
                 return NotFound();
             }
-            ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "Id", "Id", jugador.IdEquipo);
-            return View(jugador);
+            return View(estadio);
         }
 
-        // POST: Jugadors/Edit/5
+        // POST: Estadios1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Posicion,Edad,IdEquipo")] Jugador jugador)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Direccion,Ciudad,Capacidad")] Estadio estadio)
         {
-            if (id != jugador.Id)
+            if (id != estadio.Id)
             {
                 return NotFound();
             }
@@ -110,12 +97,12 @@ namespace ProEquipos.Controllers
             {
                 try
                 {
-                    _context.Update(jugador);
+                    _context.Update(estadio);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!JugadorExists(jugador.Id))
+                    if (!EstadioExists(estadio.Id))
                     {
                         return NotFound();
                     }
@@ -126,11 +113,10 @@ namespace ProEquipos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEquipo"] = new SelectList(_context.Set<Equipo>(), "Id", "Id", jugador.IdEquipo);
-            return View(jugador);
+            return View(estadio);
         }
 
-        // GET: Jugadors/Delete/5
+        // GET: Estadios1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,35 +124,34 @@ namespace ProEquipos.Controllers
                 return NotFound();
             }
 
-            var jugador = await _context.Jugador
-                .Include(j => j.Equipo)
+            var estadio = await _context.Estadio
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (jugador == null)
+            if (estadio == null)
             {
                 return NotFound();
             }
 
-            return View(jugador);
+            return View(estadio);
         }
 
-        // POST: Jugadors/Delete/5
+        // POST: Estadios1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var jugador = await _context.Jugador.FindAsync(id);
-            if (jugador != null)
+            var estadio = await _context.Estadio.FindAsync(id);
+            if (estadio != null)
             {
-                _context.Jugador.Remove(jugador);
+                _context.Estadio.Remove(estadio);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool JugadorExists(int id)
+        private bool EstadioExists(int id)
         {
-            return _context.Jugador.Any(e => e.Id == id);
+            return _context.Estadio.Any(e => e.Id == id);
         }
     }
 }
